@@ -1,0 +1,28 @@
+# server配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 连接池配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql:///dp_management
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mybatis-plus的配置
+mybatis-plus:
+  type-aliases-package: website.hehe.pojo
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted  #全局逻辑删除
+
+#jwt配置
+jwt:
+  token:
+    tokenExpiration: 120 #有效时间,单位分钟 (7days)
+    tokenSignKey: q1oVIceSNonEp591CCBvtrrPSZHTT0t03Dqbw33S5uPPRD4IlXpeQtV66SxIpx5bmlFEEArdUm86GwwHgSkxOQoMj3jSkLk7AeWs  #当前程序签名秘钥 自定义

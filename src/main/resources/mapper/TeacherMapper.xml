@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.hehe.mapper.TeacherMapper">
+
+    <resultMap id="BaseResultMap" type="website.hehe.pojo.Teacher">
+            <id property="teacherUuid" column="teacher_uuid" jdbcType="INTEGER"/>
+            <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherPassword" column="teacher_password" jdbcType="VARCHAR"/>
+            <result property="teacherClass" column="teacher_class" jdbcType="VARCHAR"/>
+            <result property="teacherLevel" column="teacher_level" jdbcType="INTEGER"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        teacher_uuid,teacher_id,teacher_name,
+        teacher_password,teacher_class,teacher_level,
+        version,is_deleted
+    </sql>
+</mapper>

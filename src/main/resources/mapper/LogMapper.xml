@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="website.hehe.mapper.LogMapper">
+
+    <resultMap id="BaseResultMap" type="website.hehe.pojo.Log">
+        <id property="logId" column="log_id" jdbcType="INTEGER"/>
+        <result property="logType" column="log_type" jdbcType="VARCHAR"/>
+        <result property="logLocation" column="log_location" jdbcType="VARCHAR"/>
+        <result property="dp" column="dp" jdbcType="INTEGER"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+        <result property="appealId" column="appeal_id" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        log_id,log_type,log_location,
+        dp,date,appeal_id,
+        remark,student_id,version,
+        is_deleted
+    </sql>
+    <select id="selectByStudentIdAndAppealStatus" resultType="website.hehe.pojo.Log">
+        SELECT log.log_id,
+               log.log_type,
+               log.log_location,
+               log.dp,
+               log.date,
+               log.appeal_id,
+               log.remark,
+               log.student_id
+        FROM log
+                 LEFT JOIN appeal ON log.appeal_id = appeal.appeal_id
+        WHERE log.student_id = #{userId}
+          AND ((appeal.appeal_status is null) or appeal.appeal_status != 3)
+        GROUP BY log.log_id;
+    </select>
+</mapper>

@@ -5,15 +5,15 @@
 <mapper namespace="website.hehe.mapper.StudentMapper">
 
     <resultMap id="BaseResultMap" type="website.hehe.pojo.Student">
-            <id property="studentUuid" column="student_uuid" jdbcType="INTEGER"/>
-            <result property="studentId" column="student_id" jdbcType="INTEGER"/>
-            <result property="studentPassword" column="student_password" jdbcType="VARCHAR"/>
-            <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
-            <result property="studentClass" column="student_class" jdbcType="VARCHAR"/>
-            <result property="studentSex" column="student_sex" jdbcType="CHAR"/>
-            <result property="studentAge" column="student_age" jdbcType="INTEGER"/>
-            <result property="version" column="version" jdbcType="INTEGER"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <id property="studentUuid" column="student_uuid" jdbcType="INTEGER"/>
+        <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="studentPassword" column="student_password" jdbcType="VARCHAR"/>
+        <result property="studentName" column="student_name" jdbcType="VARCHAR"/>
+        <result property="studentClass" column="student_class" jdbcType="VARCHAR"/>
+        <result property="studentSex" column="student_sex" jdbcType="CHAR"/>
+        <result property="studentAge" column="student_age" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

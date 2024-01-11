@@ -1,6 +1,5 @@
 package website.hehe.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class ClassLevelUtils {
@@ -12,6 +11,7 @@ public class ClassLevelUtils {
         SH("SH");
 
         private final String level;
+
         ClassLevel(String level) {
             this.level = level;
         }

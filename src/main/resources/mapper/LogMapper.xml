@@ -13,6 +13,7 @@
         <result property="appealId" column="appeal_id" jdbcType="INTEGER"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="studentId" column="student_id" jdbcType="INTEGER"/>
+        <result property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
         <result property="version" column="version" jdbcType="INTEGER"/>
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
@@ -20,7 +21,7 @@
     <sql id="Base_Column_List">
         log_id,log_type,log_location,
         dp,date,appeal_id,
-        remark,student_id,version,
+        remark,student_id,teacher_id,version,
         is_deleted
     </sql>
     <select id="selectByStudentIdAndAppealStatus" resultType="website.hehe.pojo.Log">
@@ -31,11 +32,52 @@
                log.date,
                log.appeal_id,
                log.remark,
-               log.student_id
+               log.student_id,
+               log.teacher_id
         FROM log
                  LEFT JOIN appeal ON log.appeal_id = appeal.appeal_id
         WHERE log.student_id = #{userId}
           AND ((appeal.appeal_status is null) or appeal.appeal_status != 3)
         GROUP BY log.log_id;
+    </select>
+
+    <select id="selectLogsByAppealIdExcludeNonPendingAppeals" resultType="website.hehe.pojo.vo.LogRequest">
+        select log_type        as type,
+               log_location    as location,
+               a.appeal_id     as id,
+               dp,
+               date,
+               a.appeal_reason as reason,
+               s.student_name  as studentName,
+               s.student_class as studentClass
+        from log
+                 left join dp_management.appeal a on log.appeal_id = a.appeal_id
+                 left join dp_management.student s on log.student_id = s.student_id
+        where a.appeal_status = 1
+    </select>
+
+    <select id="selectAllLogsIncludedClassAndStudentDataExcludedFulfilledAppeals" resultType="java.util.Map">
+        SELECT l.log_type, l.log_location, l.date, l.dp, c.class_name, c.class_level, s.student_name
+        FROM log l
+                 JOIN student s ON l.student_id = s.student_id
+                 JOIN class c ON s.student_class = c.class_name
+                 LEFT JOIN appeal a ON l.appeal_id = a.appeal_id
+        WHERE a.appeal_status != 2
+           OR a.appeal_status IS NULL
+    </select>
+
+    <select id="selectAllLogsIncludedClassAndStudentDataExcludedFulfilledAppealsByClassName"
+            resultType="java.util.Map">
+        SELECT l.log_type, l.log_location, l.date, l.dp, s.student_name, c.class_name
+        FROM log l
+                 JOIN student s ON l.student_id = s.student_id
+                 JOIN class c ON s.student_class = c.class_name
+                 LEFT JOIN appeal a ON l.appeal_id = a.appeal_id
+        WHERE (a.appeal_status != 2
+            OR a.appeal_status IS NULL)
+          AND c.class_name = (SELECT c.class_name
+                              FROM class c
+                                       LEFT JOIN teacher t ON t.teacher_class = c.class_name
+                              WHERE t.teacher_id = #{userId})
     </select>
 </mapper>

@@ -1,6 +1,5 @@
 package website.hehe.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
@@ -11,6 +10,8 @@ import website.hehe.mapper.LogMapper;
 import website.hehe.pojo.Appeal;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.AppealRequest;
+import website.hehe.pojo.vo.LogRequest;
+import website.hehe.pojo.vo.ModifyAppeal;
 import website.hehe.service.AppealService;
 import website.hehe.utils.JwtUtils;
 import website.hehe.utils.Result;
@@ -61,8 +62,33 @@ public class AppealServiceImpl extends ServiceImpl<AppealMapper, Appeal> impleme
 
         return Result.success(null);
     }
+
+    @Override
+    public Result<List<LogRequest>> getPendingAppeals(String token) {
+        List<LogRequest> logList = logMapper.selectLogsByAppealIdExcludeNonPendingAppeals();
+        return Result.success(logList);
+    }
+
+    @Override
+    public Result<Object> rejectAppeals(String token, ModifyAppeal modifyAppeal) {
+        UpdateWrapper<Appeal> appealUpdateWrapper = new UpdateWrapper<>();
+        appealUpdateWrapper.eq("appeal_id", modifyAppeal.getAppealId());
+
+        Appeal appeal = new Appeal();
+        appeal.setAppealStatus(3);
+        appeal.setAppealReason(modifyAppeal.getAppealReason());
+        appealMapper.update(appeal, appealUpdateWrapper);
+        return Result.success(null);
+    }
+
+    @Override
+    public Result<Object> fulfillAppeals(String token, ModifyAppeal modifyAppeal) {
+        UpdateWrapper<Appeal> appealUpdateWrapper = new UpdateWrapper<>();
+        appealUpdateWrapper.eq("appeal_id", modifyAppeal.getAppealId());
+
+        Appeal appeal = new Appeal();
+        appeal.setAppealStatus(2);
+        appealMapper.update(appeal, appealUpdateWrapper);
+        return Result.success(null);
+    }
 }
-
-
-
-

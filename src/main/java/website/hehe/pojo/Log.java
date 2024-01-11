@@ -1,16 +1,18 @@
 package website.hehe.pojo;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * @TableName log
  */
-@TableName(value ="log")
+@TableName(value = "log")
 @Data
 public class Log implements Serializable {
     @TableId
@@ -29,6 +31,8 @@ public class Log implements Serializable {
     private String remark;
 
     private Integer studentId;
+
+    private Integer teacherId;
 
     @Version
     private Integer version;

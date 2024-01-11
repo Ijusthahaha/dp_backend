@@ -3,9 +3,8 @@ package website.hehe.controller;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import website.hehe.pojo.Appeal;
 import website.hehe.pojo.Log;
-import website.hehe.pojo.vo.CompareLog;
+import website.hehe.pojo.vo.LogRequest;
 import website.hehe.service.LogService;
 import website.hehe.utils.Result;
 
@@ -33,5 +32,20 @@ public class LogController {
     @GetMapping("/getCompareLogs")
     public Result<List<Map<String, Object>>> getCompareLogs() {
         return logService.getCompareLogs();
+    }
+
+    @PostMapping("/postLogs")
+    public Result<Object> postLogs(@RequestHeader String token, @RequestBody LogRequest logRequest) {
+        return logService.postLogs(token, logRequest);
+    }
+
+    @GetMapping("/getAllLogs")
+    public Result<List<Map<String, Object>>> getAllLogs() {
+        return logService.getAllLogs();
+    }
+
+    @GetMapping("/getAllLogsByClass")
+    public Result<List<Map<String, Object>>> getAllLogsByClass(@RequestHeader String token) {
+        return logService.getAllLogsByClass(token);
     }
 }

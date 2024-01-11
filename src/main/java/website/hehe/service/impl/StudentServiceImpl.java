@@ -6,12 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import website.hehe.mapper.ClassMapper;
-import website.hehe.pojo.Class;
+import website.hehe.mapper.StudentMapper;
 import website.hehe.pojo.Student;
 import website.hehe.service.StudentService;
-import website.hehe.mapper.StudentMapper;
-import org.springframework.stereotype.Service;
 import website.hehe.utils.*;
 
 import java.io.UnsupportedEncodingException;
@@ -26,7 +25,7 @@ import java.util.Map;
 @Service
 @Setter(onMethod_ = @Autowired)
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
-        implements StudentService{
+        implements StudentService {
 
     private StudentMapper studentMapper;
     private ClassMapper classMapper;
@@ -43,7 +42,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
 
         try {
             if (!StringUtils.isEmpty(student.getStudentPassword()) &&
-            MD5Utils.encode(student.getStudentPassword()).equals(loginUser.getStudentPassword())) {
+                    MD5Utils.encode(student.getStudentPassword()).equals(loginUser.getStudentPassword())) {
                 String token = jwtUtils.createToken(student.getStudentId());
                 Map<String, String> data = new HashMap<>();
                 data.put("token", token);
@@ -54,6 +53,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         }
         return Result.build(ResultEnum.PASSWORD_ERROR, null);
     }
+
     @Override
     public Result<Map<String, String>> checkLogin(String token) {
         boolean expiration = jwtUtils.parseToken(token);

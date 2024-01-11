@@ -5,26 +5,28 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import website.hehe.pojo.Student;
+import org.springframework.stereotype.Service;
+import website.hehe.mapper.TeacherMapper;
 import website.hehe.pojo.Teacher;
 import website.hehe.service.TeacherService;
-import website.hehe.mapper.TeacherMapper;
-import org.springframework.stereotype.Service;
-import website.hehe.utils.*;
+import website.hehe.utils.JwtUtils;
+import website.hehe.utils.MD5Utils;
+import website.hehe.utils.Result;
+import website.hehe.utils.ResultEnum;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
-* @author hehe
-* @description 针对表【teacher】的数据库操作Service实现
-* @createDate 2023-12-14 15:46:27
-*/
+ * @author hehe
+ * @description 针对表【teacher】的数据库操作Service实现
+ * @createDate 2023-12-14 15:46:27
+ */
 @Service
 @Setter(onMethod_ = @Autowired)
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
-    implements TeacherService{
+        implements TeacherService {
 
     private TeacherMapper teacherMapper;
     private JwtUtils jwtUtils;

@@ -29,7 +29,8 @@
 
     <update id="updateAppealsByAppealId">
         UPDATE appeal
-        SET appeal_status = #{appealStatus}, appeal_reason = #{appealReason}
+        SET appeal_status = #{appealStatus},
+            appeal_reason = #{appealReason}
         WHERE appeal_id IN (SELECT appeal_id FROM log WHERE student_id = #{userId})
           AND appeal_id = #{appealId};
     </update>

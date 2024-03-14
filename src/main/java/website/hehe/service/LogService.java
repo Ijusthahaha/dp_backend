@@ -26,4 +26,6 @@ public interface LogService extends IService<Log> {
     Result<List<Map<String, Object>>> getAllLogs();
 
     Result<List<Map<String, Object>>> getAllLogsByClass(String token);
+
+    Result<Integer> getYesterdayDp();
 }

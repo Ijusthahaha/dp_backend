@@ -1,5 +1,6 @@
 package website.hehe.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,21 @@ public class LogController {
     @GetMapping("/getAllLogsByClass")
     public Result<List<Map<String, Object>>> getAllLogsByClass(@RequestHeader String token) {
         return logService.getAllLogsByClass(token);
+    }
+
+    @GetMapping("/getTotalDp")
+    public Result<Integer> getTotalDp() {
+        Log one = logService.getOne(new QueryWrapper<Log>().select("sum(dp) as dp"));
+        if (one == null) {
+            return Result.success(0);
+        } else {
+            one.setDp(one.getDp());
+        }
+        return Result.success(one.getDp());
+    }
+
+    @GetMapping("/getYesterdayDp")
+    public Result<Integer> getYesterdayDp() {
+        return logService.getYesterdayDp();
     }
 }

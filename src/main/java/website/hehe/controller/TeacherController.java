@@ -26,4 +26,9 @@ public class TeacherController {
     public Result<Object> checkLogin(@RequestHeader String token) {
         return teacherService.checkLogin(token);
     }
+
+    @GetMapping("/getTotalTeacher")
+    public Result<Integer> getTotalTeacher() {
+        return Result.success(teacherService.list().size());
+    }
 }

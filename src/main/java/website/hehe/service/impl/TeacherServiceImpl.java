@@ -14,7 +14,6 @@ import website.hehe.utils.MD5Utils;
 import website.hehe.utils.Result;
 import website.hehe.utils.ResultEnum;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,16 +39,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
             return Result.build(ResultEnum.PASSWORD_ERROR, null);
         }
 
-        try {
-            if (!StringUtils.isEmpty(teacher.getTeacherPassword()) &&
-                    MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
-                String token = jwtUtils.createToken(teacher.getTeacherId());
-                Map<String, String> data = new HashMap<>();
-                data.put("token", token);
-                return Result.success(data);
-            }
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+        if (!StringUtils.isEmpty(teacher.getTeacherPassword()) &&
+                MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
+            String token = jwtUtils.createToken(teacher.getTeacherId());
+            Map<String, String> data = new HashMap<>();
+            data.put("token", token);
+            return Result.success(data);
         }
         return Result.build(ResultEnum.PASSWORD_ERROR, null);
     }

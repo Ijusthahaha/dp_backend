@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -26,5 +27,6 @@ public class Appeal implements Serializable {
 
     private Integer isDeleted;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 }

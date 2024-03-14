@@ -24,14 +24,20 @@ public class AuthUtils {
 
     // TODO: maybe interceptor?
     public static Result<Object> checkTeacherLevel(Integer userId) {
-
         Teacher teacher = authUtils.teacherMapper.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeacherId, userId));
 
         // TODO: test this, dont be embarrassing
         if (teacher == null || teacher.getTeacherLevel() < 2) {
-            return Result.fail("Seems like ur trying to use ur token to get this. Nice try, never give up.\n oh btw, your ip address has already been recorded. gl.");
+            return Result.fail(null);
         }
+        return Result.success(null);
+    }
 
+    public static Result<Object> checkAdmin(Integer userId) {
+        Teacher teacher = authUtils.teacherMapper.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeacherId, userId));
+        if (teacher == null || teacher.getTeacherLevel() != 3) {
+            return Result.fail(null);
+        }
         return Result.success(null);
     }
 }

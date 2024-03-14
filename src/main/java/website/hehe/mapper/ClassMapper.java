@@ -12,6 +12,8 @@ import website.hehe.pojo.Class;
 public interface ClassMapper extends BaseMapper<Class> {
 
     Integer getClassLevelByStudentClass(String studentClass);
+
+    Integer getClassIdByClassName(String studentClass);
 }
 
 

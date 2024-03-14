@@ -12,6 +12,7 @@
         <result property="studentClass" column="student_class" jdbcType="VARCHAR"/>
         <result property="studentSex" column="student_sex" jdbcType="CHAR"/>
         <result property="studentAge" column="student_age" jdbcType="INTEGER"/>
+        <result property="isExpired" column="is_expired" jdbcType="INTEGER"/>
         <result property="version" column="version" jdbcType="INTEGER"/>
         <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
@@ -19,6 +20,83 @@
     <sql id="Base_Column_List">
         student_uuid,student_id,student_password,
         student_name,student_class,student_sex,
-        student_age,version,is_deleted
+        student_age,is_expired,version,is_deleted
     </sql>
+
+    <select id="selectAllStudentsWithClassLevel" resultType="website.hehe.pojo.vo.studentDataDisplay">
+        SELECT student.student_uuid,
+               student.student_id,
+               student.student_name,
+               student.student_class,
+               student.student_age,
+               student.student_sex,
+               student.is_expired,
+               c.class_level      AS student_class_level,
+               SUM(l.dp)          AS dp,
+               COUNT(a.appeal_id) AS appealed_count
+        FROM student
+                 LEFT JOIN class c ON student.student_class = c.class_name
+                 LEFT JOIN (SELECT student_id, appeal_id, dp
+                            FROM log) l ON student.student_id = l.student_id
+                 LEFT JOIN appeal a ON l.appeal_id = a.appeal_id
+        GROUP BY student.student_uuid, student.student_id, student.student_name, student.student_class,
+                 student.student_age, student.student_sex, student.is_expired, c.class_level;
+    </select>
+
+    <select id="selectAllStudentsByClassName" resultType="website.hehe.pojo.vo.studentDataDisplay">
+        SELECT student.student_uuid,
+               student.student_id,
+               student.student_name,
+               student.student_class,
+               student.student_age,
+               student.student_sex,
+               student.is_expired,
+               c.class_level      AS student_class_level,
+               SUM(l.dp)          AS dp,
+               COUNT(a.appeal_id) AS appealed_count
+        FROM student
+                 LEFT JOIN class c ON student.student_class = c.class_name
+                 LEFT JOIN (SELECT student_id, appeal_id, dp
+                            FROM log) l ON student.student_id = l.student_id
+                 LEFT JOIN appeal a ON l.appeal_id = a.appeal_id
+        WHERE student_class = #{className}
+        GROUP BY student.student_uuid, student.student_id, student.student_name, student.student_class,
+                 student.student_age, student.student_sex, student.is_expired, c.class_level;
+    </select>
+
+    <select id="selectStudentsByKeyword" resultType="website.hehe.pojo.Student">
+        select student.student_id, student.student_name, student.student_class
+        from student
+        where student_class like concat('%', #{keyword}, '%')
+           or student_name like concat('%', #{keyword}, '%')
+           or concat(student_class, ' ', student_name) like concat('%', #{keyword}, '%')
+    </select>
+
+    <select id="selectLatestId" resultType="java.lang.Integer">
+        select max(student_id)
+        from student
+        where student_id like concat(#{year}, '%')
+          and substring(student_id, 5, 3) = #{classId}
+    </select>
+
+    <select id="selectAllEmptyClassStudent" resultType="website.hehe.pojo.vo.studentDataDisplay">
+        SELECT student.student_uuid,
+               student.student_id,
+               student.student_name,
+               student.student_class,
+               student.student_age,
+               student.student_sex,
+               student.is_expired,
+               c.class_level      AS student_class_level,
+               SUM(l.dp)          AS dp,
+               COUNT(a.appeal_id) AS appealed_count
+        FROM student
+                 LEFT JOIN class c ON student.student_class = c.class_name
+                 LEFT JOIN (SELECT student_id, appeal_id, dp
+                            FROM log) l ON student.student_id = l.student_id
+                 LEFT JOIN appeal a ON l.appeal_id = a.appeal_id
+        WHERE student_class IS NULL
+        GROUP BY student.student_uuid, student.student_id, student.student_name, student.student_class,
+                 student.student_age, student.student_sex, student.is_expired, c.class_level;
+    </select>
 </mapper>

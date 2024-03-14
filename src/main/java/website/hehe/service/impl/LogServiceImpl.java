@@ -85,6 +85,11 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log>
         List<Map<String, Object>> result = logMapper.selectAllLogsIncludedClassAndStudentDataExcludedFulfilledAppealsByClassName(userId);
         return Result.success(result);
     }
+
+    @Override
+    public Result<Integer> getYesterdayDp() {
+        return Result.success(logMapper.getYesterdayDp());
+    }
 }
 
 

@@ -18,4 +18,10 @@
         from class
         where class_name = #{studentClass}
     </select>
+
+    <select id="getClassIdByClassName" resultType="java.lang.Integer">
+        select class.class_id
+        from class
+        where class_name = #{studentClass}
+    </select>
 </mapper>

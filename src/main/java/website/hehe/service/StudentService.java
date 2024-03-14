@@ -1,9 +1,14 @@
 package website.hehe.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 import website.hehe.pojo.Student;
+import website.hehe.pojo.vo.ModifyStudent;
+import website.hehe.pojo.vo.studentDataDisplay;
 import website.hehe.utils.Result;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,4 +23,20 @@ public interface StudentService extends IService<Student> {
     Result<Map<String, String>> checkLogin(String token);
 
     Result<Object> changePassword(String token, String password);
+
+    Result<List<studentDataDisplay>> getAllStudents();
+
+    Result<List<Student>> getStudents(String keyword);
+
+    Result<List<studentDataDisplay>> getAllClassStudents(String className);
+
+    Result<List<String>> getAllClasses();
+
+    Result<Object> insertStudent(String token, studentDataDisplay studentDataDisplay);
+
+    void getStudentExcel(String token, HttpServletResponse response);
+
+    List<Student> uploadStudentExcel(MultipartFile file);
+
+    Result<Object> modifyStudent(ModifyStudent modifyStudent);
 }

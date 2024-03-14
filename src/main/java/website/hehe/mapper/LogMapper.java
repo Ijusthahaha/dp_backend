@@ -22,6 +22,8 @@ public interface LogMapper extends BaseMapper<Log> {
     List<Map<String, Object>> selectAllLogsIncludedClassAndStudentDataExcludedFulfilledAppeals();
 
     List<Map<String, Object>> selectAllLogsIncludedClassAndStudentDataExcludedFulfilledAppealsByClassName(Integer userId);
+
+    Integer getYesterdayDp();
 }
 
 

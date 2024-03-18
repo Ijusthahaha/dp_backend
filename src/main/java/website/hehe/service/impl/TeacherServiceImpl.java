@@ -2,6 +2,7 @@ package website.hehe.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import website.hehe.utils.Result;
 import website.hehe.utils.ResultEnum;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +43,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
 
         if (!StringUtils.isEmpty(teacher.getTeacherPassword()) &&
                 MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
-            String token = jwtUtils.createToken(teacher.getTeacherId());
+            String token = jwtUtils.createToken(teacher.getTeacherId(), "teacher");
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
             return Result.success(data);
@@ -72,6 +74,14 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
             return Result.success(map);
         }
         return Result.build(ResultEnum.NOTLOGIN, null);
+    }
+
+    @Override
+    public Result<List<Teacher>> getAllTeachers() { // pagination
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        teacherQueryWrapper.select(Teacher.class, info -> !info.getColumn().equals("teacher_password"));
+        List<Teacher> teachers = teacherMapper.selectList(teacherQueryWrapper);
+        return Result.success(teachers);
     }
 }
 

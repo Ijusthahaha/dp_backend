@@ -10,21 +10,34 @@ import website.hehe.interceptor.AdminOperationInterceptor;
 import website.hehe.interceptor.SuperOperationInterceptor;
 import website.hehe.interceptor.TokenLogInterceptor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @Setter(onMethod_ = @Autowired)
 public class WebMVCConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // TODO: add as list
-        registry.addInterceptor(tokenLogInterceptor()).addPathPatterns("/log").addPathPatterns("/appeal");
-        registry.addInterceptor(superOperationInterceptor()).addPathPatterns("/appeal/getPendingAppeals").addPathPatterns("/appeal/rejectAppeals").addPathPatterns("/appeal/fulfillAppeals");
-        registry.addInterceptor(adminOperationInterceptor()).addPathPatterns("/student/insertStudent").addPathPatterns("/student/getStudentExcel").addPathPatterns("/student/uploadStudentExcel").addPathPatterns("/student/modifyStudent");
-    }
+        List<String> tokenLogInterceptor = Arrays
+                .asList("/log",
+                        "/appeal");
+        List<String> superOperationInterceptor = Arrays
+                .asList("/appeal/getPendingAppeals",
+                        "/appeal/rejectAppeals",
+                        "/appeal/fulfillAppeals");
+        List<String> adminOperationInterceptor = Arrays
+                .asList("/student/insertStudent",
+                        "/student/getStudentExcel",
+                        "/student/uploadStudentExcel",
+                        "/student/modifyStudent",
+                        "/getAllStudents",
+                        "/getAllTeachers");
 
-    //    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**").allowedOriginPatterns("*").allowCredentials(true).allowedHeaders(CorsConfiguration.ALL).allowedMethods(CorsConfiguration.ALL).maxAge(3600);
-//    }
+        registry.addInterceptor(tokenLogInterceptor()).addPathPatterns(tokenLogInterceptor);
+        registry.addInterceptor(superOperationInterceptor()).addPathPatterns(superOperationInterceptor);
+        registry.addInterceptor(adminOperationInterceptor()).addPathPatterns(adminOperationInterceptor);
+    }
 
     @Bean(name = "tokenLog")
     public TokenLogInterceptor tokenLogInterceptor() {

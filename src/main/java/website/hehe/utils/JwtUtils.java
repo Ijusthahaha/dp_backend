@@ -19,7 +19,7 @@ public class JwtUtils {
     private long tokenExpiration; //有效时间,单位毫秒 1000毫秒 == 1秒
     private String tokenSignKey;  //当前程序签名秘钥
 
-    public String createToken(int id) {
+    public String createToken(int id, String user) {
         return Jwts
                 .builder()
                 .header()
@@ -27,6 +27,7 @@ public class JwtUtils {
                 .add("alg", "HS256")
                 .and()
                 .claim("id", id)
+                .claim("aud", user)
                 .expiration(new Date(System.currentTimeMillis() + tokenExpiration * 1000 * 60))
                 .signWith(Keys.hmacShaKeyFor(tokenSignKey.getBytes()), Jwts.SIG.HS256)
                 .compact();

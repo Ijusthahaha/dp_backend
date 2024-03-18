@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import website.hehe.pojo.Teacher;
 import website.hehe.utils.Result;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,4 +17,6 @@ public interface TeacherService extends IService<Teacher> {
     Result<Map<String, String>> login(Teacher teacher);
 
     Result<Object> checkLogin(String token);
+
+    Result<List<Teacher>> getAllTeachers();
 }

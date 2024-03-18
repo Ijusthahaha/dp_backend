@@ -54,7 +54,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
 
         if (!StringUtils.isEmpty(student.getStudentPassword()) && MD5Utils.encode(student.getStudentPassword()).equals(loginUser.getStudentPassword())) {
-            String token = jwtUtils.createToken(student.getStudentId());
+            String token = jwtUtils.createToken(student.getStudentId(), "student");
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
             return Result.success(data);

@@ -7,6 +7,7 @@ import website.hehe.pojo.Teacher;
 import website.hehe.service.TeacherService;
 import website.hehe.utils.Result;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,5 +31,10 @@ public class TeacherController {
     @GetMapping("/getTotalTeacher")
     public Result<Integer> getTotalTeacher() {
         return Result.success(teacherService.list().size());
+    }
+
+    @GetMapping("getAllTeachers")
+    public Result<List<Teacher>> getAllTeachers(@RequestHeader String token) {
+        return teacherService.getAllTeachers();
     }
 }

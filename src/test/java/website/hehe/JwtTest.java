@@ -14,7 +14,7 @@ public class JwtTest {
     @Test
     public void testJwt() {
         //生成 传入用户标识
-        String token = jwtUtils.createToken(114514);
+        String token = jwtUtils.createToken(114514, "student");
         System.out.println("token = " + token);
 
         //解析用户标识

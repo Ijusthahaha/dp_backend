@@ -20,4 +20,9 @@
         teacher_password,teacher_class,teacher_level,
         version,is_deleted
     </sql>
+    <select id="selectLatestId" resultType="java.lang.Integer">
+        select max(teacher_id)
+        from teacher
+        where teacher_id like concat(#{year}, '%')
+    </select>
 </mapper>

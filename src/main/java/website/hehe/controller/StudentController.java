@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.ModifyStudent;
-import website.hehe.pojo.vo.studentDataDisplay;
+import website.hehe.pojo.vo.StudentDataDisplay;
 import website.hehe.service.StudentService;
 import website.hehe.utils.Result;
 
@@ -37,7 +37,7 @@ public class StudentController {
     }
 
     @PutMapping("/insertStudent")
-    public Result<Object> insertStudent(@RequestHeader String token, @RequestBody studentDataDisplay studentDataDisplay) {
+    public Result<Object> insertStudent(@RequestHeader String token, @RequestBody StudentDataDisplay studentDataDisplay) {
         return studentService.insertStudent(token, studentDataDisplay);
     }
 
@@ -47,12 +47,12 @@ public class StudentController {
     }
 
     @GetMapping("/getAllStudents")
-    public Result<List<studentDataDisplay>> getAllStudents() {
+    public Result<List<StudentDataDisplay>> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping("/getAllClassStudents")
-    public Result<List<studentDataDisplay>> getAllClassStudents(String className) {
+    public Result<List<StudentDataDisplay>> getAllClassStudents(String className) {
         return studentService.getAllClassStudents(className);
     }
 
@@ -74,10 +74,11 @@ public class StudentController {
     @PostMapping("/uploadStudentExcel")
     public Result<Object> uploadStudentExcel(@RequestHeader String token, MultipartFile file) {
         List<Student> students = studentService.uploadStudentExcel(file);
+        boolean status = false;
         if (!students.isEmpty()) {
-            studentService.saveBatch(students);
+            status = studentService.saveBatch(students);
         }
-        return Result.success(null);
+        return Result.success(status);
     }
 
     @PutMapping("/modifyStudent")

@@ -17,7 +17,7 @@ import website.hehe.mapper.StudentMapper;
 import website.hehe.pojo.Class;
 import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.ModifyStudent;
-import website.hehe.pojo.vo.studentDataDisplay;
+import website.hehe.pojo.vo.StudentDataDisplay;
 import website.hehe.service.StudentService;
 import website.hehe.utils.*;
 
@@ -100,13 +100,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Student student = new Student();
         student.setStudentPassword(MD5Utils.encode(password));
 
-        studentMapper.update(student, new UpdateWrapper<Student>().eq("student_id", userId));
-        return Result.success(null);
+        int update = studentMapper.update(student, new UpdateWrapper<Student>().eq("student_id", userId));
+        return Result.success(update);
     }
 
     @Override
-    public Result<List<studentDataDisplay>> getAllStudents() {
-        List<studentDataDisplay> students = studentMapper.selectAllStudentsWithClassLevel();
+    public Result<List<StudentDataDisplay>> getAllStudents() {
+        List<StudentDataDisplay> students = studentMapper.selectAllStudentsWithClassLevel();
         return Result.success(students);
     }
 
@@ -117,7 +117,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public Result<List<studentDataDisplay>> getAllClassStudents(String className) {
+    public Result<List<StudentDataDisplay>> getAllClassStudents(String className) {
         if (className != null && !className.isEmpty()) {
             return Result.success(studentMapper.selectAllStudentsByClassName(className));
         } else {
@@ -133,7 +133,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public Result<Object> insertStudent(String token, studentDataDisplay studentDataDisplay) {
+    public Result<Object> insertStudent(String token, StudentDataDisplay studentDataDisplay) {
         // we dont need to verify token right?
         Student student = new Student();
         student.setStudentName(studentDataDisplay.getStudentName());
@@ -161,8 +161,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         // set students' default password as studentId.
         student.setStudentPassword(MD5Utils.encode(String.valueOf(generateStudentId)));
 
-        studentMapper.insert(student);
-        return Result.success(null);
+        int insert = studentMapper.insert(student);
+        return Result.success(insert);
     }
 
     @Override
@@ -219,7 +219,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Result<Object> modifyStudent(ModifyStudent modifyStudent) {
         Student student = new Student();
-        student.setStudentUuid(modifyStudent.getStudentUuid());
         student.setStudentName(modifyStudent.getStudentName());
         student.setStudentClass(modifyStudent.getStudentClass());
         student.setStudentSex(modifyStudent.getStudentSex());

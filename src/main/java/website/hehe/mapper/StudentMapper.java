@@ -2,7 +2,7 @@ package website.hehe.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import website.hehe.pojo.Student;
-import website.hehe.pojo.vo.studentDataDisplay;
+import website.hehe.pojo.vo.StudentDataDisplay;
 
 import java.util.List;
 
@@ -15,15 +15,15 @@ import java.util.List;
 
 public interface StudentMapper extends BaseMapper<Student> {
 
-    List<studentDataDisplay> selectAllStudentsWithClassLevel();
+    List<StudentDataDisplay> selectAllStudentsWithClassLevel();
 
     List<Student> selectStudentsByKeyword(String keyword);
 
-    List<studentDataDisplay> selectAllStudentsByClassName(String className);
+    List<StudentDataDisplay> selectAllStudentsByClassName(String className);
 
     Integer selectLatestId(Integer year, Integer classId);
 
-    List<studentDataDisplay> selectAllEmptyClassStudent();
+    List<StudentDataDisplay> selectAllEmptyClassStudent();
 }
 
 

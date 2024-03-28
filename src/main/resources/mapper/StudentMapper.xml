@@ -23,7 +23,7 @@
         student_age,is_expired,version,is_deleted
     </sql>
 
-    <select id="selectAllStudentsWithClassLevel" resultType="website.hehe.pojo.vo.studentDataDisplay">
+    <select id="selectAllStudentsWithClassLevel" resultType="website.hehe.pojo.vo.StudentDataDisplay">
         SELECT student.student_uuid,
                student.student_id,
                student.student_name,
@@ -43,7 +43,7 @@
                  student.student_age, student.student_sex, student.is_expired, c.class_level;
     </select>
 
-    <select id="selectAllStudentsByClassName" resultType="website.hehe.pojo.vo.studentDataDisplay">
+    <select id="selectAllStudentsByClassName" resultType="website.hehe.pojo.vo.StudentDataDisplay">
         SELECT student.student_uuid,
                student.student_id,
                student.student_name,
@@ -79,7 +79,7 @@
           and substring(student_id, 5, 3) = #{classId}
     </select>
 
-    <select id="selectAllEmptyClassStudent" resultType="website.hehe.pojo.vo.studentDataDisplay">
+    <select id="selectAllEmptyClassStudent" resultType="website.hehe.pojo.vo.StudentDataDisplay">
         SELECT student.student_uuid,
                student.student_id,
                student.student_name,

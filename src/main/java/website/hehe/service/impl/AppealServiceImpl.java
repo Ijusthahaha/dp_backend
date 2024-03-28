@@ -58,9 +58,9 @@ public class AppealServiceImpl extends ServiceImpl<AppealMapper, Appeal> impleme
         queryParamsMap.put("log_id", appealRequest.getLogId());
         queryParamsMap.put("student_id", userId);
 
-        logMapper.update(log, new UpdateWrapper<Log>().allEq(queryParamsMap));
+        int update = logMapper.update(log, new UpdateWrapper<Log>().allEq(queryParamsMap));
 
-        return Result.success(null);
+        return Result.success(update);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class AppealServiceImpl extends ServiceImpl<AppealMapper, Appeal> impleme
         Appeal appeal = new Appeal();
         appeal.setAppealStatus(3);
         appeal.setAppealReason(modifyAppeal.getAppealReason());
-        appealMapper.update(appeal, appealUpdateWrapper);
-        return Result.success(null);
+        int update = appealMapper.update(appeal, appealUpdateWrapper);
+        return Result.success(update);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class AppealServiceImpl extends ServiceImpl<AppealMapper, Appeal> impleme
 
         Appeal appeal = new Appeal();
         appeal.setAppealStatus(2);
-        appealMapper.update(appeal, appealUpdateWrapper);
-        return Result.success(null);
+        int update = appealMapper.update(appeal, appealUpdateWrapper);
+        return Result.success(update);
     }
 }

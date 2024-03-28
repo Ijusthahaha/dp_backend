@@ -3,7 +3,7 @@ package website.hehe.pojo.vo;
 import lombok.Data;
 
 @Data
-public class studentDataDisplay {
+public class StudentDataDisplay {
     private String studentUuid;
     private String studentId;
     private String studentName;

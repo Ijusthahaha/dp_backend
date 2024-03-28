@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.ModifyStudent;
-import website.hehe.pojo.vo.studentDataDisplay;
+import website.hehe.pojo.vo.StudentDataDisplay;
 import website.hehe.utils.Result;
 
 import java.util.List;
@@ -24,15 +24,15 @@ public interface StudentService extends IService<Student> {
 
     Result<Object> changePassword(String token, String password);
 
-    Result<List<studentDataDisplay>> getAllStudents();
+    Result<List<StudentDataDisplay>> getAllStudents();
 
     Result<List<Student>> getStudents(String keyword);
 
-    Result<List<studentDataDisplay>> getAllClassStudents(String className);
+    Result<List<StudentDataDisplay>> getAllClassStudents(String className);
 
     Result<List<String>> getAllClasses();
 
-    Result<Object> insertStudent(String token, studentDataDisplay studentDataDisplay);
+    Result<Object> insertStudent(String token, StudentDataDisplay studentDataDisplay);
 
     void getStudentExcel(String token, HttpServletResponse response);
 

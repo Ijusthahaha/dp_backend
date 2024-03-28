@@ -28,7 +28,6 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log>
         implements LogService {
 
     private LogMapper logMapper;
-    private ClassMapper classMapper;
     private JwtUtils jwtUtils;
 
     @Override
@@ -69,8 +68,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log>
         log.setRemark(logRequest.getReason());
         log.setStudentId(logRequest.getId());
         log.setTeacherId(userId);
-        logMapper.insert(log);
-        return Result.success(null);
+        int insert = logMapper.insert(log);
+        return Result.success(insert);
     }
 
     @Override

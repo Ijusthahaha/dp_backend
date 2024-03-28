@@ -11,6 +11,7 @@ import website.hehe.pojo.Teacher;
  */
 public interface TeacherMapper extends BaseMapper<Teacher> {
 
+    Integer selectLatestId(int i);
 }
 
 

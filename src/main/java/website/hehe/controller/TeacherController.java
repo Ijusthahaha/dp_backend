@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import website.hehe.pojo.Student;
 import website.hehe.pojo.Teacher;
 import website.hehe.pojo.vo.ModifyTeacher;
 import website.hehe.pojo.vo.TeacherDataDisplay;

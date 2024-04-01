@@ -191,19 +191,23 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             EasyExcel.read(inputStream, Student.class, new PageReadListener<Student>(dataList -> {
                 Calendar rightNow = Calendar.getInstance();
                 int i = rightNow.get(Calendar.YEAR);
+                Map<String, Integer> latestMap = new HashMap<>();
 
                 for (Student student : dataList) {
                     if (student.getStudentClass() != null) {
                         Integer classId = classMapper.getClassIdByClassName(student.getStudentClass());
-                        Integer latest = studentMapper.selectLatestId(i, classId);
-
-                        if (latest == null) {
-                            latest = Integer.valueOf(i + Integer.toString(classId) + "000");
-                        }
                         if (classId != null) {
+                            Integer latest = latestMap.getOrDefault(student.getStudentClass(), null);
+                            if (latest == null) {
+                                latest = studentMapper.selectLatestId(i, classId);
+                                if (latest == null) {
+                                    latest = Integer.valueOf(i + Integer.toString(classId) + "000");
+                                }
+                            }
                             Integer generateStudentId = IdUtils.generateStudentId(i, latest, classId);
                             student.setStudentId(generateStudentId);
                             student.setStudentPassword(MD5Utils.encode(String.valueOf(generateStudentId)));
+                            latestMap.put(student.getStudentClass(), latest + 1);
                         }
                     }
                     students.add(student);

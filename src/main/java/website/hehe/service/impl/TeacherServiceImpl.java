@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import website.hehe.mapper.TeacherMapper;
-import website.hehe.pojo.Student;
 import website.hehe.pojo.Teacher;
 import website.hehe.pojo.vo.ModifyTeacher;
 import website.hehe.pojo.vo.TeacherDataDisplay;
@@ -23,7 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hehe
@@ -102,8 +104,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
             Teacher teacher1 = teacherMapper.selectById(modifyTeacher.getTeacherUuid());
             if (teacher1 == null) {
                 return Result.fail("Uuid not found.");
-            }
-            else {
+            } else {
                 teacher.setTeacherPassword(MD5Utils.encode(String.valueOf(teacher1.getTeacherId())));
             }
         }
@@ -163,16 +164,19 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
             }
             EasyExcel.read(inputStream, Teacher.class, new PageReadListener<Teacher>(dataList -> {
                 int day = IdUtils.getTeacherIdPrefix();
+                Integer latest = null;
 
                 for (Teacher teacher : dataList) {
-                    Integer latest = teacherMapper.selectLatestId(day);
-
                     if (latest == null) {
-                        latest = Integer.valueOf(day + "000");
+                        latest = teacherMapper.selectLatestId(day);
+                        if (latest == null) {
+                            latest = Integer.valueOf(day + "000");
+                        }
                     }
 
                     teacher.setTeacherId(IdUtils.generateTeacherId(latest));
                     teacher.setTeacherPassword(MD5Utils.encode(String.valueOf(teacher.getTeacherId())));
+                    latest++;
 
                     teachers.add(teacher);
                 }

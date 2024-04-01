@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import website.hehe.mapper.ClassMapper;
 import website.hehe.mapper.LogMapper;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;

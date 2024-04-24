@@ -56,6 +56,7 @@ public class StudentController {
         return studentService.getAllClassStudents(className);
     }
 
+    @Deprecated
     @GetMapping("/getAllClasses")
     public Result<List<String>> getAllClasses() {
         return studentService.getAllClasses();
@@ -84,5 +85,10 @@ public class StudentController {
     @PutMapping("/modifyStudent")
     public Result<Object> modifyStudent(@RequestHeader String token, @RequestBody ModifyStudent modifyStudent) {
         return studentService.modifyStudent(modifyStudent);
+    }
+
+    @GetMapping("/getTopDpStudents")
+    public Result<List<Map<String, Integer>>> getTopDpStudents() {
+        return studentService.getTopDpStudents();
     }
 }

@@ -33,4 +33,6 @@ public interface TeacherService extends IService<Teacher> {
     void getTeacherExcel(String token, HttpServletResponse response);
 
     List<Teacher> uploadTeacherExcel(MultipartFile file);
+
+    Result<List<Map<String, Integer>>> getTopDpTeachers();
 }

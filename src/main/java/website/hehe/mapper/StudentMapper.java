@@ -5,6 +5,7 @@ import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.StudentDataDisplay;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hehe
@@ -24,6 +25,8 @@ public interface StudentMapper extends BaseMapper<Student> {
     Integer selectLatestId(Integer year, Integer classId);
 
     List<StudentDataDisplay> selectAllEmptyClassStudent();
+
+    List<Map<String, Integer>> getTopDpStudents();
 }
 
 

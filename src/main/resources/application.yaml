@@ -17,6 +17,8 @@ spring:
 # mybatis-plus的配置
 mybatis-plus:
   type-aliases-package: website.hehe.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       logic-delete-field: isDeleted  #全局逻辑删除

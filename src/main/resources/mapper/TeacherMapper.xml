@@ -25,4 +25,18 @@
         from teacher
         where teacher_id like concat(#{year}, '%')
     </select>
+    <select id="getTopDpTeachers" resultType="java.util.Map">
+        SELECT
+            `teacher`.`teacher_name` AS name,
+            SUM(`log`.`dp`) AS `total_dp`
+        FROM
+            `log`
+                JOIN
+            `teacher` ON `log`.`teacher_id` = `teacher`.`teacher_id`
+        GROUP BY
+            `teacher`.`teacher_name`
+        ORDER BY
+            `total_dp` DESC
+        LIMIT 10;
+    </select>
 </mapper>

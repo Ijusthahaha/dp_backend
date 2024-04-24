@@ -18,20 +18,9 @@ import java.util.List;
 public class WebMVCConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        List<String> tokenLogInterceptor = Arrays
-                .asList("/log",
-                        "/appeal");
-        List<String> superOperationInterceptor = Arrays
-                .asList("/appeal/getPendingAppeals",
-                        "/appeal/rejectAppeals",
-                        "/appeal/fulfillAppeals");
-        List<String> adminOperationInterceptor = Arrays
-                .asList("/student/insertStudent",
-                        "/student/getStudentExcel",
-                        "/student/uploadStudentExcel",
-                        "/student/modifyStudent",
-                        "/getAllStudents",
-                        "/getAllTeachers");
+        List<String> tokenLogInterceptor = Arrays.asList("/log", "/appeal");
+        List<String> superOperationInterceptor = Arrays.asList("/appeal/getPendingAppeals", "/appeal/rejectAppeals", "/appeal/fulfillAppeals");
+        List<String> adminOperationInterceptor = Arrays.asList("/student/insertStudent", "/student/getStudentExcel", "/student/uploadStudentExcel", "/student/modifyStudent", "/student/getAllStudents", "/teacher/getAllTeachers", "/class/createClass", "/class/deleteClass"); //TODO: MISSING ROUTES!
 
         registry.addInterceptor(tokenLogInterceptor()).addPathPatterns(tokenLogInterceptor);
         registry.addInterceptor(superOperationInterceptor()).addPathPatterns(superOperationInterceptor);

@@ -4,19 +4,6 @@ import lombok.Getter;
 
 public class ClassLevelUtils {
 
-    @Getter
-    public enum ClassLevel {
-        MD("MD"),
-        JH("JH"),
-        SH("SH");
-
-        private final String level;
-
-        ClassLevel(String level) {
-            this.level = level;
-        }
-    }
-
     public static ClassLevel parseClassLevel(int l) {
         if (l == 0) {
             return ClassLevel.MD;
@@ -26,6 +13,17 @@ public class ClassLevelUtils {
             return ClassLevel.SH;
         } else {
             throw new RuntimeException("Wrong class level");
+        }
+    }
+
+    @Getter
+    public enum ClassLevel {
+        MD("MD"), JH("JH"), SH("SH");
+
+        private final String level;
+
+        ClassLevel(String level) {
+            this.level = level;
         }
     }
 }

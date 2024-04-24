@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import website.hehe.mapper.AppealMapper;
 import website.hehe.mapper.LogMapper;
 import website.hehe.pojo.Appeal;
@@ -40,6 +41,7 @@ public class AppealServiceImpl extends ServiceImpl<AppealMapper, Appeal> impleme
         return Result.success(appeals);
     }
 
+    @Transactional
     @Override
     public Result<Object> createAppeals(String token, AppealRequest appealRequest) {
 

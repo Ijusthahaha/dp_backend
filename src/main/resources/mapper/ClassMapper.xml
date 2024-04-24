@@ -24,4 +24,28 @@
         from class
         where class_name = #{studentClass}
     </select>
+
+    <select id="selectClassDataByClassId" resultType="java.util.Map">
+        SELECT COUNT(DISTINCT student.student_uuid) AS student_count,
+               SUM(log.dp)                          AS total_dp
+        FROM student
+                 LEFT JOIN
+             log ON student.student_id = log.student_id
+                 LEFT JOIN
+             class ON student.student_class = class.class_name
+        WHERE class.class_id = #{classId};
+    </select>
+
+    <update id="setStudentClassAsNone">
+        UPDATE student
+            INNER JOIN class ON student.student_class = class.class_name
+        SET student.student_class = NULL
+        WHERE class.class_id = #{classId}
+    </update>
+    <update id="setTeacherClassAsNone">
+        UPDATE teacher
+            INNER JOIN class ON teacher.teacher_class = class.class_name
+        SET teacher.teacher_class = NULL
+        WHERE class.class_id = #{classId}
+    </update>
 </mapper>

@@ -99,4 +99,18 @@
         GROUP BY student.student_uuid, student.student_id, student.student_name, student.student_class,
                  student.student_age, student.student_sex, student.is_expired, c.class_level;
     </select>
+    <select id="getTopDpStudents" resultType="java.util.Map">
+        SELECT
+            `student`.`student_name` AS name,
+            SUM(`log`.`dp`) AS `total_dp`
+        FROM
+            `log`
+                JOIN
+            `student` ON `log`.`student_id` = `student`.`student_id`
+        GROUP BY
+            `student`.`student_name`
+        ORDER BY
+            `total_dp` DESC
+        LIMIT 10;
+    </select>
 </mapper>

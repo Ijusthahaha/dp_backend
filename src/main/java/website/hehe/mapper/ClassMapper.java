@@ -3,6 +3,8 @@ package website.hehe.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import website.hehe.pojo.Class;
 
+import java.util.Map;
+
 /**
  * @author hehe
  * @description 针对表【class】的数据库操作Mapper
@@ -14,6 +16,12 @@ public interface ClassMapper extends BaseMapper<Class> {
     Integer getClassLevelByStudentClass(String studentClass);
 
     Integer getClassIdByClassName(String studentClass);
+
+    Map<String, Number> selectClassDataByClassId(Integer classId);
+
+    void setStudentClassAsNone(Integer classId);
+
+    void setTeacherClassAsNone(Integer classId);
 }
 
 

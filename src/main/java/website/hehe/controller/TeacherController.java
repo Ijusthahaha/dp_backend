@@ -70,4 +70,9 @@ public class TeacherController {
         }
         return Result.success(null);
     }
+
+    @GetMapping("/getTopDpTeachers")
+    public Result<List<Map<String, Integer>>> getTopDpTeachers() {
+        return teacherService.getTopDpTeachers();
+    }
 }

@@ -2,6 +2,10 @@ package website.hehe.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import website.hehe.pojo.Teacher;
+import website.hehe.utils.Result;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hehe
@@ -12,6 +16,8 @@ import website.hehe.pojo.Teacher;
 public interface TeacherMapper extends BaseMapper<Teacher> {
 
     Integer selectLatestId(int i);
+
+    List<Map<String, Integer>> getTopDpTeachers();
 }
 
 

@@ -25,6 +25,4 @@ public class Main {
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());  //防全局修改和删除
         return interceptor;
     }
-
-    // TODO: TRANSACTION
 }

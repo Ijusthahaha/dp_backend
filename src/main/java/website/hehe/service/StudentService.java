@@ -39,4 +39,6 @@ public interface StudentService extends IService<Student> {
     List<Student> uploadStudentExcel(MultipartFile file);
 
     Result<Object> modifyStudent(ModifyStudent modifyStudent);
+
+    Result<List<Map<String, Integer>>> getTopDpStudents();
 }

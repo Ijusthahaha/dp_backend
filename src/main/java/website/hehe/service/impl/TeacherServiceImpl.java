@@ -34,8 +34,7 @@ import java.util.Map;
  */
 @Service
 @Setter(onMethod_ = @Autowired)
-public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
-        implements TeacherService {
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
 
     private TeacherMapper teacherMapper;
     private JwtUtils jwtUtils;
@@ -49,8 +48,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
             return Result.build(ResultEnum.PASSWORD_ERROR, null);
         }
 
-        if (!StringUtils.isEmpty(teacher.getTeacherPassword()) &&
-                MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
+        if (!StringUtils.isEmpty(teacher.getTeacherPassword()) && MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
             String token = jwtUtils.createToken(teacher.getTeacherId(), "teacher");
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
@@ -186,6 +184,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
         }
 
         return teachers;
+    }
+
+    @Override
+    public Result<List<Map<String, Integer>>> getTopDpTeachers() {
+        return Result.success(teacherMapper.getTopDpTeachers());
     }
 }
 

@@ -15,18 +15,9 @@ public class AuthUtils {
     @Autowired
     private TeacherMapper teacherMapper;
 
-    @PostConstruct
-    public void init() {
-        authUtils = this;
-        authUtils.teacherMapper = this.teacherMapper;
-    }
-
-
-    // TODO: maybe interceptor?
     public static Result<Object> checkTeacherLevel(Integer userId) {
         Teacher teacher = authUtils.teacherMapper.selectOne(new LambdaQueryWrapper<Teacher>().eq(Teacher::getTeacherId, userId));
 
-        // TODO: test this, dont be embarrassing
         if (teacher == null || teacher.getTeacherLevel() < 2) {
             return Result.fail(null);
         }
@@ -39,5 +30,11 @@ public class AuthUtils {
             return Result.fail(null);
         }
         return Result.success(null);
+    }
+
+    @PostConstruct
+    public void init() {
+        authUtils = this;
+        authUtils.teacherMapper = this.teacherMapper;
     }
 }

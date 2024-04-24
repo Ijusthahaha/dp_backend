@@ -27,6 +27,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static website.hehe.utils.getDataUtils.getLatestInteger;
+
 /**
  * @author hehe
  * @description 针对表【student】的数据库操作Service实现
@@ -126,6 +128,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
+    @Deprecated
     public Result<List<String>> getAllClasses() {
         List<Class> classes = classMapper.selectList(new QueryWrapper<Class>().lambda().orderBy(true, true, Class::getClassLevel));
         List<String> collect = classes.stream().map(Class::getClassName).toList();
@@ -198,15 +201,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
                         Integer classId = classMapper.getClassIdByClassName(student.getStudentClass());
                         if (classId != null) {
                             Integer latest = latestMap.getOrDefault(student.getStudentClass(), null);
-                            if (latest == null) {
-                                latest = studentMapper.selectLatestId(i, classId);
-                                if (latest == null) {
-                                    latest = Integer.valueOf(i + Integer.toString(classId) + "000");
-                                }
-                            }
-                            Integer generateStudentId = IdUtils.generateStudentId(i, latest, classId);
-                            student.setStudentId(generateStudentId);
-                            student.setStudentPassword(MD5Utils.encode(String.valueOf(generateStudentId)));
+                            latest = getLatestInteger(i, latest, classId, student, studentMapper);
                             latestMap.put(student.getStudentClass(), latest + 1);
                         }
                     }
@@ -223,6 +218,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public Result<Object> modifyStudent(ModifyStudent modifyStudent) {
         Student student = new Student();
+        student.setStudentUuid(modifyStudent.getStudentUuid());
         student.setStudentName(modifyStudent.getStudentName());
         student.setStudentClass(modifyStudent.getStudentClass());
         student.setStudentSex(modifyStudent.getStudentSex());
@@ -233,7 +229,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             if (modifyStudent.getStudentClass().isEmpty()) {
                 return Result.fail(null);
             } else {
-                // TODO: Duplicated code fragment (9 lines long)
                 Calendar rightNow = Calendar.getInstance();
                 int i = rightNow.get(Calendar.YEAR);
 
@@ -264,5 +259,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         int i = studentMapper.updateById(student);
         return Result.success(i);
+    }
+
+    @Override
+    public Result<List<Map<String, Integer>>> getTopDpStudents() {
+        return Result.success(studentMapper.getTopDpStudents());
     }
 }

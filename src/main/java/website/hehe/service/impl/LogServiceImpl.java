@@ -23,8 +23,7 @@ import java.util.Map;
  */
 @Service
 @Setter(onMethod_ = @Autowired)
-public class LogServiceImpl extends ServiceImpl<LogMapper, Log>
-        implements LogService {
+public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogService {
 
     private LogMapper logMapper;
     private JwtUtils jwtUtils;

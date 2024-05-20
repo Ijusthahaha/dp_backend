@@ -24,7 +24,7 @@
         remark,student_id,teacher_id,version,
         is_deleted
     </sql>
-    <select id="selectByStudentIdAndAppealStatus" resultType="website.hehe.pojo.Log">
+    <select id="selectByStudentIdAndAppealStatus" resultType="website.hehe.pojo.vo.LogVo">
         SELECT log.log_id,
                log.log_type,
                log.log_location,
@@ -33,7 +33,8 @@
                log.appeal_id,
                log.remark,
                log.student_id,
-               log.teacher_id
+               log.teacher_id,
+               appeal_status AS appeal
         FROM log
                  LEFT JOIN appeal ON log.appeal_id = appeal.appeal_id
         WHERE log.student_id = #{userId}

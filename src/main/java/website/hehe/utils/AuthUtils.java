@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import website.hehe.mapper.TeacherMapper;
 import website.hehe.pojo.Teacher;
+import website.hehe.utils.result.Result;
 
 @Component
 public class AuthUtils {

@@ -13,18 +13,38 @@ spring:
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
+  data: # redis配置
+    redis:
+      host: 127.0.0.1
+      port: 6380
+      password: 123456
 
 # mybatis-plus的配置
 mybatis-plus:
   type-aliases-package: website.hehe.pojo
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
   global-config:
     db-config:
       logic-delete-field: isDeleted  #全局逻辑删除
 
-#jwt配置
+# jwt配置
 jwt:
   token:
     tokenExpiration: 120 #有效时间,单位分钟 (7days)
-    tokenSignKey: q1oVIceSNonEp591CCBvtrrPSZHTT0t03Dqbw33S5uPPRD4IlXpeQtV66SxIpx5bmlFEEArdUm86GwwHgSkxOQoMj3jSkLk7AeWs  #当前程序签名秘钥 自定义
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  info:
+    env:
+      enabled: true
+info:
+  project:
+    name: "Student DP Management System"
+    url: https://github.com/Ijusthahaha/dp_backend

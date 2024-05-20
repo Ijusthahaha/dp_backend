@@ -9,7 +9,7 @@ import website.hehe.pojo.Teacher;
 import website.hehe.pojo.vo.ModifyTeacher;
 import website.hehe.pojo.vo.TeacherDataDisplay;
 import website.hehe.service.TeacherService;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -36,18 +36,23 @@ public class TeacherController {
         return Result.success(teacherService.list().size());
     }
 
+    @GetMapping("/getTeacherByUuid")
+    public Result<Teacher> getTeacherByUuid(String uuid) {
+        return Result.success(teacherService.getById(uuid));
+    }
+
     @GetMapping("/getAllTeachers")
-    public Result<List<Teacher>> getAllTeachers(@RequestHeader String token) {
+    public Result<List<Teacher>> getAllTeachers() {
         return teacherService.getAllTeachers();
     }
 
     @PutMapping("/modifyTeacher")
-    public Result<Object> modifyTeacher(@RequestHeader String token, @RequestBody ModifyTeacher modifyTeacher) {
+    public Result<Object> modifyTeacher(@RequestBody ModifyTeacher modifyTeacher) {
         return teacherService.modifyTeacher(modifyTeacher);
     }
 
     @DeleteMapping("/deleteTeacher")
-    public Result<Object> deleteTeacher(@RequestHeader String token, @RequestHeader Integer id) {
+    public Result<Object> deleteTeacher(@RequestHeader Integer id) {
         return teacherService.deleteTeacher(id);
     }
 
@@ -62,11 +67,10 @@ public class TeacherController {
     }
 
     @PostMapping("/uploadTeacherExcel")
-    public Result<Object> uploadTeacherExcel(@RequestHeader String token, MultipartFile file) {
+    public Result<Object> uploadTeacherExcel(MultipartFile file) {
         List<Teacher> teachers = teacherService.uploadTeacherExcel(file);
-        boolean status = false;
         if (!teachers.isEmpty()) {
-            status = teacherService.saveBatch(teachers);
+            teacherService.saveBatch(teachers);
         }
         return Result.success(null);
     }

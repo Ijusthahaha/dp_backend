@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import website.hehe.mapper.ClassMapper;
@@ -18,8 +19,11 @@ import website.hehe.pojo.Class;
 import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.ModifyStudent;
 import website.hehe.pojo.vo.StudentDataDisplay;
+import website.hehe.service.RedisService;
 import website.hehe.service.StudentService;
 import website.hehe.utils.*;
+import website.hehe.utils.result.Result;
+import website.hehe.utils.result.ResultEnum;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +45,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     private StudentMapper studentMapper;
     private ClassMapper classMapper;
     private JwtUtils jwtUtils;
+    private StringRedisTemplate redisTemplate;
+    private RedisService redisService;
 
     @Override
     public Result<Map<String, String>> login(Student student) {
@@ -55,10 +61,16 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             return Result.build(ResultEnum.ACCOUNT_EXPIRED, null);
         }
 
+        if (redisService.isBanned("student", String.valueOf(loginUser.getStudentUuid()))) {
+            return Result.build(ResultEnum.ACCOUNT_BANNED, null);
+        }
+
         if (!StringUtils.isEmpty(student.getStudentPassword()) && MD5Utils.encode(student.getStudentPassword()).equals(loginUser.getStudentPassword())) {
             String token = jwtUtils.createToken(student.getStudentId(), "student");
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
+
+            redisTemplate.opsForValue().increment("tv");
             return Result.success(data);
         }
         return Result.build(ResultEnum.PASSWORD_ERROR, null);
@@ -99,11 +111,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public Result<Object> changePassword(String token, String password) {
         Integer userId = jwtUtils.getUserId(token);
 
+        if (userId == null) {
+            return Result.fail("JWT Expired.");
+        }
         Student student = new Student();
         student.setStudentPassword(MD5Utils.encode(password));
 
         int update = studentMapper.update(student, new UpdateWrapper<Student>().eq("student_id", userId));
-        return Result.success(update);
+        String newToken = jwtUtils.createToken(userId, "student");
+
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("token", newToken);
+        responseData.put("result", update);
+        return Result.success(responseData);
     }
 
     @Override

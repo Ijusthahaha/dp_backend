@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import website.hehe.utils.JwtUtils;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import static website.hehe.utils.AuthUtils.checkAdmin;
 

@@ -9,14 +9,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import website.hehe.mapper.TeacherMapper;
 import website.hehe.pojo.Teacher;
 import website.hehe.pojo.vo.ModifyTeacher;
 import website.hehe.pojo.vo.TeacherDataDisplay;
+import website.hehe.service.RedisService;
 import website.hehe.service.TeacherService;
 import website.hehe.utils.*;
+import website.hehe.utils.result.Result;
+import website.hehe.utils.result.ResultEnum;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +42,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     private TeacherMapper teacherMapper;
     private JwtUtils jwtUtils;
+    private StringRedisTemplate redisTemplate;
+    private RedisService redisService;
 
     @Override
     public Result<Map<String, String>> login(Teacher teacher) {
@@ -48,10 +54,16 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             return Result.build(ResultEnum.PASSWORD_ERROR, null);
         }
 
+        if (redisService.isBanned("teacher", String.valueOf(loginUser.getTeacherUuid()))) {
+            return Result.build(ResultEnum.ACCOUNT_BANNED, null);
+        }
+
         if (!StringUtils.isEmpty(teacher.getTeacherPassword()) && MD5Utils.encode(teacher.getTeacherPassword()).equals(loginUser.getTeacherPassword())) {
             String token = jwtUtils.createToken(teacher.getTeacherId(), "teacher");
             Map<String, String> data = new HashMap<>();
             data.put("token", token);
+
+            redisTemplate.opsForValue().increment("tv");
             return Result.success(data);
         }
         return Result.build(ResultEnum.PASSWORD_ERROR, null);
@@ -191,7 +203,3 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         return Result.success(teacherMapper.getTopDpTeachers());
     }
 }
-
-
-
-

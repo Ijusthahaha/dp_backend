@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;
+import website.hehe.pojo.vo.LogVo;
 import website.hehe.service.LogService;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class LogController {
     private LogService logService;
 
     @GetMapping("/getLogs")
-    public Result<List<Log>> getLogs(@RequestHeader String token) {
+    public Result<List<LogVo>> getLogs(@RequestHeader String token) {
         return logService.getLogs(token);
     }
 

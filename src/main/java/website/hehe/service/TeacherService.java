@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import website.hehe.pojo.Teacher;
 import website.hehe.pojo.vo.ModifyTeacher;
 import website.hehe.pojo.vo.TeacherDataDisplay;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;

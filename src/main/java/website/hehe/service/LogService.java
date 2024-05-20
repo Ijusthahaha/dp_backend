@@ -3,7 +3,8 @@ package website.hehe.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;
-import website.hehe.utils.Result;
+import website.hehe.pojo.vo.LogVo;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public interface LogService extends IService<Log> {
 
-    Result<List<Log>> getLogs(String token);
+    Result<List<LogVo>> getLogs(String token);
 
     Result<List<Map<String, Object>>> getCompareLogs();
 

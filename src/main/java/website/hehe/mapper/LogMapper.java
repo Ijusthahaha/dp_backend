@@ -3,6 +3,7 @@ package website.hehe.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;
+import website.hehe.pojo.vo.LogVo;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public interface LogMapper extends BaseMapper<Log> {
 
-    List<Log> selectByStudentIdAndAppealStatus(Integer userId);
+    List<LogVo> selectByStudentIdAndAppealStatus(Integer userId);
 
     List<LogRequest> selectLogsByAppealIdExcludeNonPendingAppeals();
 

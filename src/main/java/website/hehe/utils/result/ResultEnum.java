@@ -1,11 +1,12 @@
-package website.hehe.utils;
+package website.hehe.utils.result;
 
 import lombok.Getter;
 
 @Getter
 public enum ResultEnum {
     SUCCESS(200, "Operation successful."),
-    ACCOUNT_EXPIRED(301, "Account expired."),
+    ACCOUNT_EXPIRED(500, "Account expired."),
+    ACCOUNT_BANNED(500, "Account has been banned."),
     PASSWORD_ERROR(500, "Username or password error."),
     NOTLOGIN(500, "User not login."),
     USERNAME_USED(500, "Username already used.");

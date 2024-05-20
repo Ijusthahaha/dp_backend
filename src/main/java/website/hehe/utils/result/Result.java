@@ -1,4 +1,4 @@
-package website.hehe.utils;
+package website.hehe.utils.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

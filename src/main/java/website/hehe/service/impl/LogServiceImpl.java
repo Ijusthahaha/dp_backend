@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 import website.hehe.mapper.LogMapper;
 import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;
+import website.hehe.pojo.vo.LogVo;
 import website.hehe.service.LogService;
 import website.hehe.utils.JwtUtils;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,10 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
     private JwtUtils jwtUtils;
 
     @Override
-    public Result<List<Log>> getLogs(String token) {
+    public Result<List<LogVo>> getLogs(String token) {
         Integer userId = jwtUtils.getUserId(token);
 
-        List<Log> logs = logMapper.selectByStudentIdAndAppealStatus(userId);
+        List<LogVo> logs = logMapper.selectByStudentIdAndAppealStatus(userId);
         return Result.success(logs);
     }
 

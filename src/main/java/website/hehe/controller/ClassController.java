@@ -10,7 +10,7 @@ import website.hehe.pojo.Student;
 import website.hehe.pojo.vo.ClassDataDisplay;
 import website.hehe.service.ClassService;
 import website.hehe.service.StudentService;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.List;
 import java.util.Map;

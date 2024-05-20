@@ -15,7 +15,7 @@ import website.hehe.pojo.vo.LogRequest;
 import website.hehe.pojo.vo.ModifyAppeal;
 import website.hehe.service.AppealService;
 import website.hehe.utils.JwtUtils;
-import website.hehe.utils.Result;
+import website.hehe.utils.result.Result;
 
 import java.util.HashMap;
 import java.util.List;

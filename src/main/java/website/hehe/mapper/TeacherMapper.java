@@ -2,7 +2,6 @@ package website.hehe.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import website.hehe.pojo.Teacher;
-import website.hehe.utils.Result;
 
 import java.util.List;
 import java.util.Map;

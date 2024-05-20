@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import website.hehe.utils.JwtUtils;
-import website.hehe.utils.Result;
-import website.hehe.utils.ResultEnum;
+import website.hehe.utils.result.Result;
+import website.hehe.utils.result.ResultEnum;
 
 @Component
 @Setter(onMethod_ = @Autowired)

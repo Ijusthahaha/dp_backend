@@ -24,7 +24,7 @@ import java.util.Map;
 public class StudentController {
     private StudentService studentService;
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Login, operateDesc = "Student attempting to use ID and password to login")
+    @OperateLog(operateModel = "Student", operateType = Operations.Login, operateDesc = "Attempt to use ID and password to login")
     @PostMapping("/login")
     public Result<Map<String, String>> login(@RequestBody Student student) {
         return studentService.login(student);
@@ -36,52 +36,62 @@ public class StudentController {
         return studentService.checkLogin(token);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.ChangePassword, operateDesc = "Attempt to change password")
     @PutMapping("/changePassword")
     public Result<Object> changePassword(@RequestHeader String token, @RequestBody PasswordVo password) {
         return studentService.changePassword(token, password.getPassword());
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Insert, operateDesc = "Attempt to insert student")
     @PutMapping("/insertStudent")
     public Result<Object> insertStudent(@RequestHeader String token, @RequestBody StudentDataDisplay studentDataDisplay) {
         return studentService.insertStudent(token, studentDataDisplay);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to use get students")
     @GetMapping("/getStudents")
     public Result<List<Student>> getStudents(String keyword) {
         return studentService.getStudents(keyword);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student by UUID")
     @GetMapping("/getStudentByUuid")
     public Result<Student> getStudentByUuid(String uuid) {
         return Result.success(studentService.getById(uuid));
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all students")
     @GetMapping("/getAllStudents")
     public Result<List<StudentDataDisplay>> getAllStudents() {
         return studentService.getAllStudents();
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get students by class")
     @GetMapping("/getAllClassStudents")
     public Result<List<StudentDataDisplay>> getAllClassStudents(String className) {
         return studentService.getAllClassStudents(className);
     }
 
     @Deprecated
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all classes")
     @GetMapping("/getAllClasses")
     public Result<List<String>> getAllClasses() {
         return studentService.getAllClasses();
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get total student count")
     @GetMapping("/getTotalStudent")
     public Result<Integer> getTotalStudent() {
         return Result.success(studentService.list().size());
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student excel")
     @GetMapping("/getStudentExcel")
     public void getStudentExcel(@RequestHeader String token, HttpServletResponse response) {
         studentService.getStudentExcel(token, response);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Insert, operateDesc = "Attempt to insert students by excel")
     @PostMapping("/uploadStudentExcel")
     public Result<Object> uploadStudentExcel(MultipartFile file) {
         List<Student> students = studentService.uploadStudentExcel(file);
@@ -92,11 +102,13 @@ public class StudentController {
         return Result.success(status);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Login, operateDesc = "Attempt to modify student")
     @PutMapping("/modifyStudent")
     public Result<Object> modifyStudent(@RequestBody ModifyStudent modifyStudent) {
         return studentService.modifyStudent(modifyStudent);
     }
 
+    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get top DP students")
     @GetMapping("/getTopDpStudents")
     public Result<List<Map<String, Integer>>> getTopDpStudents() {
         return studentService.getTopDpStudents();

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import website.hehe.pojo.Operation;
 import website.hehe.service.OperationService;
+import website.hehe.utils.Operations;
+import website.hehe.utils.annotations.OperateLog;
 import website.hehe.utils.result.Result;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 public class OperationController {
     private OperationService operationService;
 
+    @OperateLog(operateModel = "Operation", operateType = Operations.Get, operateDesc = "Attempt to get all operations")
     @GetMapping("/getOperation")
     public Result<List<Operation>> getOperation(
             @RequestParam(value = "startTime", required = false) String startTime,

@@ -8,6 +8,8 @@ import website.hehe.pojo.Log;
 import website.hehe.pojo.vo.LogRequest;
 import website.hehe.pojo.vo.LogVo;
 import website.hehe.service.LogService;
+import website.hehe.utils.Operations;
+import website.hehe.utils.annotations.OperateLog;
 import website.hehe.utils.result.Result;
 
 import java.util.List;
@@ -21,36 +23,43 @@ public class LogController {
 
     private LogService logService;
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs")
     @GetMapping("/getLogs")
     public Result<List<LogVo>> getLogs(@RequestHeader String token) {
         return logService.getLogs(token);
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get raw logs")
     @GetMapping("/getRawLogs")
     public Result<List<Log>> getRawLogs(@RequestHeader String token) {
         return logService.getRawLogs(token);
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get compared logs")
     @GetMapping("/getCompareLogs")
     public Result<List<Map<String, Object>>> getCompareLogs() {
         return logService.getCompareLogs();
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Insert, operateDesc = "Attempt to post log")
     @PostMapping("/postLogs")
     public Result<Object> postLogs(@RequestHeader String token, @RequestBody LogRequest logRequest) {
         return logService.postLogs(token, logRequest);
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get all logs")
     @GetMapping("/getAllLogs")
     public Result<List<Map<String, Object>>> getAllLogs() {
         return logService.getAllLogs();
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs by class")
     @GetMapping("/getAllLogsByClass")
     public Result<List<Map<String, Object>>> getAllLogsByClass(@RequestHeader String token) {
         return logService.getAllLogsByClass(token);
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get total DPs")
     @GetMapping("/getTotalDp")
     public Result<Integer> getTotalDp() {
         Log one = logService.getOne(new QueryWrapper<Log>().select("sum(dp) as dp"));
@@ -62,6 +71,7 @@ public class LogController {
         return Result.success(one.getDp());
     }
 
+    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get yesterday's DP")
     @GetMapping("/getYesterdayDp")
     public Result<Integer> getYesterdayDp() {
         return logService.getYesterdayDp();

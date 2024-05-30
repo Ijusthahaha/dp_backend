@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import website.hehe.interceptor.AdminOperationInterceptor;
 import website.hehe.interceptor.SuperOperationInterceptor;
 import website.hehe.interceptor.TokenLogInterceptor;
+import website.hehe.interceptor.utils.InterceptorList;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,13 +19,13 @@ import java.util.List;
 public class WebMVCConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        List<String> tokenLogInterceptor = Arrays.asList("/log", "/appeal");
-        List<String> superOperationInterceptor = Arrays.asList("/appeal/getPendingAppeals", "/appeal/rejectAppeals", "/appeal/fulfillAppeals");
-        List<String> adminOperationInterceptor = Arrays.asList("/student/insertStudent", "/student/getStudentExcel", "/student/uploadStudentExcel", "/student/modifyStudent", "/student/getAllStudents", "/teacher/getAllTeachers", "/class/createClass", "/class/deleteClass"); //TODO: MISSING ROUTES!
+        List<String> tokenLogInterceptor = List.of(InterceptorList.TOKEN_LOG);
+        List<String> superOperationInterceptor = List.of(InterceptorList.SUPER_OPERATION);
+        List<String> adminOperationInterceptor = List.of(InterceptorList.ADMIN_OPERATION);
 
-        registry.addInterceptor(tokenLogInterceptor()).addPathPatterns(tokenLogInterceptor);
-        registry.addInterceptor(superOperationInterceptor()).addPathPatterns(superOperationInterceptor);
         registry.addInterceptor(adminOperationInterceptor()).addPathPatterns(adminOperationInterceptor);
+        registry.addInterceptor(superOperationInterceptor()).addPathPatterns(superOperationInterceptor);
+        registry.addInterceptor(tokenLogInterceptor()).addPathPatterns(tokenLogInterceptor);
     }
 
     @Bean(name = "tokenLog")

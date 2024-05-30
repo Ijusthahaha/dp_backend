@@ -1,5 +1,6 @@
 package website.hehe.utils.aop;
 
+import org.apache.commons.lang3.StringUtils;
 import com.alibaba.fastjson2.JSON;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -96,8 +97,8 @@ public class OperateLogAspect {
 
         // 将参数所在的数组转换成json
         String params = JSON.toJSONString(rtnMap);
-        operation.setRequestParam(params); // 请求参数
-        operation.setResponseParam(JSON.toJSONString(keys)); // 返回结果
+        operation.setRequestParam(StringUtils.substring(params, 0, 65535)); // 请求参数
+        operation.setResponseParam(StringUtils.substring(JSON.toJSONString(keys), 0, 65535)); // 返回结果
         if (request != null) {
             Integer userId = new JwtUtils().getUserId(request.getHeader("token"));
             if (userId != null) {

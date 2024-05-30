@@ -7,6 +7,7 @@ import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.web.bind.annotation.*;
 import website.hehe.service.RedisService;
 import website.hehe.utils.Operations;
+import website.hehe.utils.annotations.AccessLimit;
 import website.hehe.utils.annotations.OperateLog;
 
 import java.util.*;
@@ -21,36 +22,42 @@ public class RedisController {
     private MetricsEndpoint metricsEndpoint;
 
     @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get uv")
+    @AccessLimit
     @GetMapping("/uv")
     public String uv() {
         return redisService.uv();
     }
 
     @OperateLog(operateModel = "Api", operateType = Operations.Ban, operateDesc = "Attempt to ban user")
+    @AccessLimit
     @PutMapping("/ban")
     public boolean banUser(@RequestBody Map<String, Object> user) {
         return redisService.banUser((String) user.get("type"), (String) user.get("uuid"), (Integer) user.get("duration"));
     }
 
     @OperateLog(operateModel = "Api", operateType = Operations.Ban, operateDesc = "Attempt to check user's ban status")
+    @AccessLimit
     @GetMapping("/isBanned")
     public boolean isBanned(@RequestParam Map<String, String> user) {
         return redisService.isBanned(user.get("type"), user.get("uuid"));
     }
 
     @OperateLog(operateModel = "Api", operateType = Operations.Ban, operateDesc = "Attempt to unban user")
+    @AccessLimit
     @PutMapping("/unban")
     public void unbanUser(@RequestBody Map<String, String> user) {
         redisService.unBanUser(user.get("type"), user.get("uuid"));
     }
 
     @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get all banned user")
+    @AccessLimit
     @GetMapping("/getAllBannedUser")
     public Set<String> getAllBannedUser() {
         return redisService.getAllBannedUser();
     }
 
     @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get server info")
+    @AccessLimit
     @GetMapping("/info")
     public Map<String, Object> getHealth() {
         Map<String, Object> map = new HashMap<>();

@@ -19,7 +19,7 @@ import java.util.List;
 public class OperationController {
     private OperationService operationService;
 
-    @OperateLog(operateModel = "Operation", operateType = Operations.Get, operateDesc = "Attempt to get all operations")
+//    @OperateLog(operateModel = "Operation", operateType = Operations.Get, operateDesc = "Attempt to get all operations")
     @AccessLimit
     @GetMapping("/getOperation")
     public Result<List<Operation>> getOperation(

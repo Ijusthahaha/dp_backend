@@ -24,21 +24,21 @@ public class LogController {
 
     private LogService logService;
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs")
     @AccessLimit
     @GetMapping("/getLogs")
     public Result<List<LogVo>> getLogs(@RequestHeader String token) {
         return logService.getLogs(token);
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get raw logs")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get raw logs")
     @AccessLimit
     @GetMapping("/getRawLogs")
     public Result<List<Log>> getRawLogs(@RequestHeader String token) {
         return logService.getRawLogs(token);
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get compared logs")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get compared logs")
     @AccessLimit
     @GetMapping("/getCompareLogs")
     public Result<List<Map<String, Object>>> getCompareLogs() {
@@ -52,21 +52,21 @@ public class LogController {
         return logService.postLogs(token, logRequest);
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get all logs")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get all logs")
     @AccessLimit
     @GetMapping("/getAllLogs")
     public Result<List<Map<String, Object>>> getAllLogs() {
         return logService.getAllLogs();
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs by class")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs by class")
     @AccessLimit
     @GetMapping("/getAllLogsByClass")
     public Result<List<Map<String, Object>>> getAllLogsByClass(@RequestHeader String token) {
         return logService.getAllLogsByClass(token);
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get total DPs")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get total DPs")
     @AccessLimit
     @GetMapping("/getTotalDp")
     public Result<Integer> getTotalDp() {
@@ -79,7 +79,7 @@ public class LogController {
         return Result.success(one.getDp());
     }
 
-    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get yesterday's DP")
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get yesterday's DP")
     @AccessLimit
     @GetMapping("/getYesterdayDp")
     public Result<Integer> getYesterdayDp() {

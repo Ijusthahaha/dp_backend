@@ -6,7 +6,7 @@ public class ClassLevelUtils {
 
     public static ClassLevel parseClassLevel(int l) {
         if (l == 0) {
-            return ClassLevel.MD;
+            return ClassLevel.MS;
         } else if (l == 1) {
             return ClassLevel.JH;
         } else if (l == 2) {
@@ -18,7 +18,7 @@ public class ClassLevelUtils {
 
     @Getter
     public enum ClassLevel {
-        MD("MD"), JH("JH"), SH("SH");
+        MS("MS"), JH("JH"), SH("SH");
 
         private final String level;
 

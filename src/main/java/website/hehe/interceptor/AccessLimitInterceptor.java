@@ -10,7 +10,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import website.hehe.interceptor.utils.InterceptText;
 import website.hehe.utils.IpUtils;
 import website.hehe.utils.annotations.AccessLimit;
 import website.hehe.utils.result.Result;

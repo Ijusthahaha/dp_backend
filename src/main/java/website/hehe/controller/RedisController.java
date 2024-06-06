@@ -21,7 +21,7 @@ public class RedisController {
     private HealthEndpoint healthEndpoint;
     private MetricsEndpoint metricsEndpoint;
 
-    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get uv")
+//    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get uv")
     @AccessLimit
     @GetMapping("/uv")
     public String uv() {
@@ -35,7 +35,7 @@ public class RedisController {
         return redisService.banUser((String) user.get("type"), (String) user.get("uuid"), (Integer) user.get("duration"));
     }
 
-    @OperateLog(operateModel = "Api", operateType = Operations.Ban, operateDesc = "Attempt to check user's ban status")
+//    @OperateLog(operateModel = "Api", operateType = Operations.Ban, operateDesc = "Attempt to check user's ban status")
     @AccessLimit
     @GetMapping("/isBanned")
     public boolean isBanned(@RequestParam Map<String, String> user) {
@@ -49,14 +49,14 @@ public class RedisController {
         redisService.unBanUser(user.get("type"), user.get("uuid"));
     }
 
-    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get all banned user")
+//    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get all banned user")
     @AccessLimit
     @GetMapping("/getAllBannedUser")
     public Set<String> getAllBannedUser() {
         return redisService.getAllBannedUser();
     }
 
-    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get server info")
+//    @OperateLog(operateModel = "Api", operateType = Operations.Get, operateDesc = "Attempt to get server info")
     @AccessLimit
     @GetMapping("/info")
     public Map<String, Object> getHealth() {

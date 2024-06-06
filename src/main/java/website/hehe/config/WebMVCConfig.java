@@ -30,7 +30,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
         return new SuperOperationInterceptor();
     }
 
-    @Bean
+    @Bean(name = "expiredJwt")
     public ExpiredJwtInterceptor expiredJwtInterceptor() {
         return new ExpiredJwtInterceptor();
     }
@@ -47,7 +47,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
         List<String> adminOperationInterceptor = List.of(InterceptorList.ADMIN_OPERATION);
 
         registry.addInterceptor(getAccessLimitInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(expiredJwtInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(expiredJwtInterceptor()).addPathPatterns("/**").excludePathPatterns("/**/login", "/**/checkLogin");
         registry.addInterceptor(adminOperationInterceptor()).addPathPatterns(adminOperationInterceptor);
         registry.addInterceptor(superOperationInterceptor()).addPathPatterns(superOperationInterceptor);
         registry.addInterceptor(tokenLogInterceptor()).addPathPatterns(tokenLogInterceptor);

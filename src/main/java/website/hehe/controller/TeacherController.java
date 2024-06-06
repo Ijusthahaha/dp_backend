@@ -38,21 +38,21 @@ public class TeacherController {
         return teacherService.checkLogin(token);
     }
 
-    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get total teacher count")
+//    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get total teacher count")
     @AccessLimit
     @GetMapping("/getTotalTeacher")
     public Result<Integer> getTotalTeacher() {
         return Result.success(teacherService.list().size());
     }
 
-    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get teacher by UUID")
+//    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get teacher by UUID")
     @AccessLimit
     @GetMapping("/getTeacherByUuid")
     public Result<Teacher> getTeacherByUuid(String uuid) {
         return Result.success(teacherService.getById(uuid));
     }
 
-    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get all teachers")
+//    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get all teachers")
     @AccessLimit
     @GetMapping("/getAllTeachers")
     public Result<List<Teacher>> getAllTeachers() {
@@ -80,7 +80,7 @@ public class TeacherController {
         return teacherService.insertTeacher(token, teacherDataDisplay);
     }
 
-    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get teacher excel")
+//    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get teacher excel")
     @AccessLimit(times = 1)
     @GetMapping("/getTeacherExcel")
     public void getTeacherExcel(@RequestHeader String token, HttpServletResponse response) {
@@ -98,7 +98,7 @@ public class TeacherController {
         return Result.success(null);
     }
 
-    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get top DP teachers")
+//    @OperateLog(operateModel = "Teacher", operateType = Operations.Get, operateDesc = "Attempt to get top DP teachers")
     @AccessLimit
     @GetMapping("/getTopDpTeachers")
     public Result<List<Map<String, Integer>>> getTopDpTeachers() {

@@ -16,6 +16,7 @@ public class ExpiredJwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
+        if (token == null) return true;
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(TokenSignKeyUtils.getTokenSignKey().getBytes())).build().parseSignedClaims(token);
         } catch (Exception ignored) {

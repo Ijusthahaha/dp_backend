@@ -23,7 +23,7 @@ public class AppealController {
 
     private AppealService appealService;
 
-    @OperateLog(operateModel = "Appeal", operateType = Operations.Get, operateDesc = "Attempt to get appeals")
+//    @OperateLog(operateModel = "Appeal", operateType = Operations.Get, operateDesc = "Attempt to get appeals")
     @AccessLimit
     @GetMapping("/getAppeals")
     public Result<List<Map<String, Object>>> getAppeals(@RequestHeader String token) {
@@ -37,7 +37,7 @@ public class AppealController {
         return appealService.createAppeals(token, appealRequest);
     }
 
-    @OperateLog(operateModel = "Appeal", operateType = Operations.Get, operateDesc = "Attempt to get pending appeals")
+//    @OperateLog(operateModel = "Appeal", operateType = Operations.Get, operateDesc = "Attempt to get pending appeals")
     @AccessLimit
     @GetMapping("/getPendingAppeals")
     public Result<List<LogRequest>> getPendingAppeals(@RequestHeader String token) {

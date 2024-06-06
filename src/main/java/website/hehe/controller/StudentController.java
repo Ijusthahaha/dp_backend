@@ -53,28 +53,28 @@ public class StudentController {
         return studentService.insertStudent(token, studentDataDisplay);
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to use get students")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to use get students")
     @AccessLimit
     @GetMapping("/getStudents")
     public Result<List<Student>> getStudents(String keyword) {
         return studentService.getStudents(keyword);
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student by UUID")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student by UUID")
     @AccessLimit
     @GetMapping("/getStudentByUuid")
     public Result<Student> getStudentByUuid(String uuid) {
         return Result.success(studentService.getById(uuid));
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all students")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all students")
     @AccessLimit
     @GetMapping("/getAllStudents")
     public Result<List<StudentDataDisplay>> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get students by class")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get students by class")
     @AccessLimit(times = 5)
     @GetMapping("/getAllClassStudents")
     public Result<List<StudentDataDisplay>> getAllClassStudents(String className) {
@@ -82,21 +82,21 @@ public class StudentController {
     }
 
     @Deprecated
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all classes")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get all classes")
     @AccessLimit
     @GetMapping("/getAllClasses")
     public Result<List<String>> getAllClasses() {
         return studentService.getAllClasses();
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get total student count")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get total student count")
     @AccessLimit
     @GetMapping("/getTotalStudent")
     public Result<Integer> getTotalStudent() {
         return Result.success(studentService.list().size());
     }
 
-    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student excel")
+//    @OperateLog(operateModel = "Student", operateType = Operations.Get, operateDesc = "Attempt to get student excel")
     @AccessLimit(times = 1)
     @GetMapping("/getStudentExcel")
     public void getStudentExcel(@RequestHeader String token, HttpServletResponse response) {

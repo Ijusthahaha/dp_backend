@@ -40,7 +40,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info
+        include: metrics, health, info
   info:
     env:
       enabled: true

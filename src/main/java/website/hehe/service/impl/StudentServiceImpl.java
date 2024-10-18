@@ -99,8 +99,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             map.put("studentName", student.getStudentName());
             map.put("studentClass", student.getStudentClass());
 
-            Integer classLevelByStudentClass = classMapper.getClassLevelByStudentClass(student.getStudentClass());
-            map.put("studentLevel", ClassLevelUtils.parseClassLevel(classLevelByStudentClass).getLevel());
+            try {
+                Integer classLevelByStudentClass = classMapper.getClassLevelByStudentClass(student.getStudentClass());
+                map.put("studentLevel", ClassLevelUtils.parseClassLevel(classLevelByStudentClass).getLevel());
+            } catch (Exception e) {
+                map.put("studentLevel", "-1");
+            }
 
             return Result.success(map);
         }

@@ -18,6 +18,8 @@ public interface LogService extends IService<Log> {
 
     Result<List<LogVo>> getLogs(String token);
 
+    Result<List<LogVo>> getLogsByStudentId(Integer studentId);
+
     Result<List<Map<String, Object>>> getCompareLogs();
 
     Result<List<Log>> getRawLogs(String token);

@@ -38,6 +38,12 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogSe
     }
 
     @Override
+    public Result<List<LogVo>> getLogsByStudentId(Integer studentId) {
+        List<LogVo> logs = logMapper.selectByStudentIdAndAppealStatus(studentId);
+        return Result.success(logs);
+    }
+
+    @Override
     public Result<List<Log>> getRawLogs(String token) {
         Integer userId = jwtUtils.getUserId(token);
 

@@ -9,7 +9,8 @@ public class InterceptorList {
     public static final String[] SUPER_OPERATION = {
             "/appeal/getPendingAppeals",
             "/appeal/rejectAppeals",
-            "/appeal/fulfillAppeals"
+            "/appeal/fulfillAppeals",
+            "/log/getLogsByStudentId"
     };
     public static final String[] ADMIN_OPERATION = {
             "/student/getStudentByUuid",

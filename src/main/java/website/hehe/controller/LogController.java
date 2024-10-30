@@ -31,6 +31,13 @@ public class LogController {
         return logService.getLogs(token);
     }
 
+//    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get logs")
+    @AccessLimit
+    @GetMapping("/getLogsByStudents")
+    public Result<List<LogVo>> getLogsByStudentId(@RequestParam("studentId") Integer studentId) {
+        return logService.getLogsByStudentId(studentId);
+    }
+
 //    @OperateLog(operateModel = "Log", operateType = Operations.Get, operateDesc = "Attempt to get raw logs")
     @AccessLimit
     @GetMapping("/getRawLogs")
